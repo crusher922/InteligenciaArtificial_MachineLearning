@@ -12,7 +12,7 @@ DATASET_DIR = os.path.join(BASE_DIR, "dataset")
 MODEL_PATH = os.path.join(BASE_DIR, "modelo_svm.pkl")
 
 CATEGORIAS = ["perros", "gatos"]
-IMG_SIZE = (64, 64)
+IMG_SIZE = (32, 32)
 
 
 def cargar_imagenes():
@@ -60,18 +60,27 @@ def main():
     print(f"Shape X: {X.shape}")
     print(f"Shape y: {y.shape}")
 
+    valores_unicos, conteos = np.unique(y, return_counts=True)
+    print("\n=== DISTRIBUCIÓN DE CLASES ===")
+    for valor, cantidad in zip(valores_unicos, conteos):
+        print(f"{CATEGORIAS[valor]}: {cantidad}")
+
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    print("Entrenando SVM en CPU...")
-    modelo = SVC(kernel="linear")
+    print("\nEntrenando SVM en CPU...")
+    modelo = SVC(kernel="rbf", class_weight="balanced", C=10, gamma="scale")
     modelo.fit(X_train, y_train)
 
+    train_pred = modelo.predict(X_train)
     pred = modelo.predict(X_test)
 
+    print("\n=== MÉTRICAS ===")
+    print("Accuracy entrenamiento:", round(accuracy_score(y_train, train_pred), 4))
+    print("Accuracy prueba:", round(accuracy_score(y_test, pred), 4))
+
     print("\n=== RESULTADOS DEL MODELO SVM ===")
-    print("Accuracy:", round(accuracy_score(y_test, pred), 4))
     print("\nMatriz de confusión:")
     print(confusion_matrix(y_test, pred))
     print("\nReporte de clasificación:")

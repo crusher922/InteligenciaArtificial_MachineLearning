@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "modelo_svm.pkl")
 
-IMG_SIZE = (64, 64)
+IMG_SIZE = (32, 32)
 CATEGORIAS = ["perros", "gatos"]
 
 
