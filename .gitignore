@@ -1,0 +1,12 @@
+.idea/
+
+.~lock.DocumentacionModelos.odt#
+svm_model/dataset
+svm_model/test
+graficas_modelos/
+
+*.jpg
+*.jpeg
+*.png
+
+dataset_ventas_simulado.csv
