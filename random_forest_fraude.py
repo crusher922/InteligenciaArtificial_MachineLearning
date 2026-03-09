@@ -87,6 +87,24 @@ def main():
     print(f"Transacciones normales reales: {int(len(y_test) - sum(y_test))}")
     print(f"Transacciones normales predichas: {int(len(pred) - sum(pred))}")
 
+
+    # Grafico Comparacion Fraude o noral
+    labels = ["Fraude", "Normal"]
+
+    valores_reales = [sum(y_test), len(y_test) - sum(y_test)]
+    valores_pred = [sum(pred), len(pred) - sum(pred)]
+
+    x = np.arange(len(labels))
+
+    plt.figure(figsize=(8, 6))
+    plt.bar(x - 0.2, valores_reales, width=0.4, label="Real")
+    plt.bar(x + 0.2, valores_pred, width=0.4, label="Predicción")
+    plt.xticks(x, labels)
+    plt.title("Comparación de fraudes reales vs detectados")
+    plt.ylabel("Cantidad de transacciones")
+    plt.legend()
+    plt.show()
+
     # Gráfico de importancia
     plt.figure(figsize=(8, 6))
     plt.barh(importancias["Variable"], importancias["Importancia"])

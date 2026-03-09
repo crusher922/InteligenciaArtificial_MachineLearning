@@ -97,6 +97,24 @@ def main():
     print(f"Clientes de bajo riesgo reales: {int(len(y_test) - sum(y_test))}")
     print(f"Clientes de bajo riesgo predichos: {int(len(pred) - sum(pred))}")
 
+    # Grafico comparativo de la prediccion contra los datos reales
+    labels = ["Alto Riesgo", "Bajo Riesgo"]
+
+    valores_reales = [sum(y_test), len(y_test) - sum(y_test)]
+    valores_pred = [sum(pred), len(pred) - sum(pred)]
+
+    x = np.arange(len(labels))
+
+    plt.figure(figsize=(8, 6))
+    plt.bar(x - 0.2, valores_reales, width=0.4, label="Real")
+    plt.bar(x + 0.2, valores_pred, width=0.4, label="Predicción")
+    plt.xticks(x, labels)
+    plt.title("Comparación riesgo crediticio real vs predicho")
+    plt.ylabel("Cantidad de clientes")
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
     # Gráfico de importancia
     plt.figure(figsize=(8, 6))
     plt.barh(importancias["Variable"], importancias["Importancia"])
@@ -105,7 +123,6 @@ def main():
     plt.ylabel("Variable")
     plt.tight_layout()
     plt.show()
-
 
 if __name__ == "__main__":
     main()
